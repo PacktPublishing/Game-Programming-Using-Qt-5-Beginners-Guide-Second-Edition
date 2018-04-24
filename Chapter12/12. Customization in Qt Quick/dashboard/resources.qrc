@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>dashboard.png</file>
+        <file>Needle.qml</file>
+        <file>Label.qml</file>
+    </qresource>
+</RCC>

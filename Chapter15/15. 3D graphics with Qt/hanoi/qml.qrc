@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Scene.qml</file>
+        <file>Rod.qml</file>
+        <file>Disk.qml</file>
+        <file>DiskAnimation.qml</file>
+        <file>obj/disk0.obj</file>
+        <file>obj/disk1.obj</file>
+        <file>obj/disk2.obj</file>
+        <file>obj/disk3.obj</file>
+        <file>obj/disk4.obj</file>
+        <file>obj/disk5.obj</file>
+        <file>obj/disk6.obj</file>
+        <file>obj/disk7.obj</file>
+    </qresource>
+</RCC>

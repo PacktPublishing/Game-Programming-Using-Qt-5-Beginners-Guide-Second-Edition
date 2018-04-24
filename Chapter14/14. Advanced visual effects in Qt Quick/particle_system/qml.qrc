@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>star.png</file>
+        <file>star_white.png</file>
+    </qresource>
+</RCC>

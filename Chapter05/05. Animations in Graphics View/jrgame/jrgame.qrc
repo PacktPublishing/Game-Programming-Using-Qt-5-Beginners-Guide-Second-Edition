@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="sky">sky.png</file>
+        <file alias="grass">grass.png</file>
+        <file alias="trees">trees.png</file>
+        <file alias="ground">ground.png</file>
+        <file alias="elephant">elephant.png</file>
+    </qresource>
+</RCC>

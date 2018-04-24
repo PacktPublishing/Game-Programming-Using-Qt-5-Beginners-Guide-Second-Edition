@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>playerinfo.xml</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,157 @@
+import QtQuick 2.9
+import QtQuick.Particles 2.0
+import "coins.js" as Coins
+
+Rectangle {
+    id: view
+
+    width: 600
+    height: 380
+
+    ParallaxScene {
+        id: scene
+        width: 1500
+        height: 380
+        anchors.bottom: parent.bottom
+        currentPos: player.x
+
+        ParallaxLayer {
+            factor: 7.5
+            width: sky.width; height: sky.height
+            anchors.bottom: parent.bottom
+
+            Image {
+                id: sky
+                property int dayLength: 60000 // 1 minute
+                source: "images/sky.png"
+                Item {
+                    id: sun
+                    x: 140
+                    y: sky.height - 170
+                    Rectangle {
+                        id: sunVisual
+                        width: 40
+                        height: width
+                        radius: width / 2
+                        color: "yellow"
+                        anchors.centerIn: parent
+
+                        SequentialAnimation on color {
+                            ColorAnimation {
+                                from: "red"
+                                to: "yellow"
+                                duration: 0.2 * sky.dayLength / 2
+                            }
+                            PauseAnimation { duration: 2 * 0.8 * sky.dayLength / 2 }
+                            ColorAnimation {
+                                to: "red"
+                                duration: 0.2 * sky.dayLength / 2
+                            }
+                            running: true
+                        }
+                    }
+                    SequentialAnimation on scale {
+                        NumberAnimation {
+                            from: 1.6; to: 0.8
+                            duration: sky.dayLength / 2
+                            easing.type: Easing.OutCubic
+                        }
+                        NumberAnimation {
+                            from: 0.8; to: 1.6
+                            duration: sky.dayLength / 2
+                            easing.type: Easing.InCubic
+                        }
+                    }
+                }
+            }
+
+            NumberAnimation {
+                target: sun
+                property: "x"
+                from: 0
+                to: sky.width
+                duration: sky.dayLength
+                running: true
+            }
+            SequentialAnimation {
+                running: true
+                NumberAnimation {
+                    target: sun
+                    property: "y"
+                    from: sky.height + sunVisual.height
+                    to: sky.height - 270
+                    duration: sky.dayLength / 2
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    target: sun
+                    property: "y"
+                    to: sky.height + sunVisual.height
+                    duration: sky.dayLength / 2
+                    easing.type: Easing.InCubic
+                }
+            }
+        }
+        ParallaxLayer {
+            factor: 2.5
+            width: trees.width; height: trees.height
+            anchors.bottom: parent.bottom
+            Image { id: trees; source: "images/trees.png" }
+        }
+        ParallaxLayer {
+            factor: 0
+            width: grass.width; height: grass.height
+            anchors.bottom: parent.bottom
+            Image { id: grass; source: "images/grass.png" }
+
+        }
+
+        ParticleSystem {
+            id: coinParticles
+            anchors.fill: parent // scene is the parent
+
+            ImageParticle {
+                source: "images/particle.png"
+                colorVariation: 1
+                alphaVariation: 1
+                rotationVariation: 180
+                rotationVelocityVariation: 10
+            }
+        }
+
+        Player {
+            id: player
+            x: 40
+
+            function checkCollisions() {
+                var result = Coins.coins.collisionsWith(player)
+                if(result.length === 0) return
+                result.forEach(function(coin) { coin.hit() })
+                Coins.coins.remove(result) // prevent the coin from being hit again
+            }
+
+            onXChanged: { checkCollisions() }
+            onYChanged: { checkCollisions() }
+        }
+
+        Component {
+            id: coinGenerator
+            Coin {}
+        }
+
+        Timer {
+            id: coinTimer
+            interval: 1000
+            repeat: true
+            running: true
+
+            onTriggered: {
+                var cx = Math.floor(Math.random() * scene.width)
+                var cy = scene.height - 60 - Math.floor(Math.random() * 60)
+                var coin = coinGenerator.createObject(scene, { x: cx, y: cy});
+                Coins.coins.push(coin)
+            }
+        }
+    }
+}
+

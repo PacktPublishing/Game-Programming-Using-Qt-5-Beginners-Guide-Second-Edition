@@ -1,0 +1,17 @@
+<PlayerInfo>
+    <Player hp="40" exp="23456">
+        <Name>Gandalf</Name>
+        <Password>mithrandir</Password>
+        <Inventory>
+            <InvItem type="Weapon" durability="3">
+                <SubType>Long sword</SubType>
+            </InvItem>
+            <InvItem type="Armor" durability="10">
+                <SubType>Chain mail</SubType>
+            </InvItem>
+        </Inventory>
+        <Location name="room1">
+            <Position x="1" y="0"/>
+        </Location>
+    </Player>
+</PlayerInfo>
